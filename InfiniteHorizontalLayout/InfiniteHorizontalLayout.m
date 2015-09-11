@@ -8,7 +8,6 @@
 
 #import "InfiniteHorizontalLayout.h"
 
-#define FIELD_WIDTH 200
 #define MIN_NUMBER_OF_ITEMS_REQUIRED 6
 
 @implementation InfiniteHorizontalLayout {
@@ -26,9 +25,8 @@
     }
     NSAssert((index >= 0) && (index < [self.collectionView numberOfItemsInSection:0]), @"preferredContentOffsetForElementAtIndex: index must be in range");
     CGFloat value = (self.itemSize.width + self.minimumLineSpacing) * index;
-    
     if (_used) {
-        value += trunc(FIELD_WIDTH / 2) * _collectionViewOriginalSize.width;
+        value += trunc(self.itemSize.width / 2) * _collectionViewOriginalSize.width;
     }
     
     return CGPointMake(value - self.collectionView.contentInset.left, self.collectionView.contentOffset.y);
@@ -40,7 +38,7 @@
         CGFloat page = self.collectionView.contentOffset.x / _collectionViewOriginalSize.width;
         CGFloat residue = (self.collectionView.contentOffset.x - trunc(page) * _collectionViewOriginalSize.width) / _collectionViewOriginalSize.width;
         
-        if (residue >= 0. && residue <= 0.0002 && page >= FIELD_WIDTH / 2 + 40) {
+        if (residue >= 0. && residue <= 0.0002 && page >= self.itemSize.width / 2 + 40) {
             self.collectionView.contentOffset = [self preferredContentOffsetForElementAtIndex:0];
         }
         if (page < 1.) {
@@ -66,7 +64,7 @@
     self.sectionInset = UIEdgeInsetsMake(0, 0, 0, self.minimumLineSpacing);
     self.collectionView.showsHorizontalScrollIndicator = NO;
     self.collectionView.showsVerticalScrollIndicator = NO;
-
+    
     [super prepareLayout];
     _collectionViewOriginalSize = [super collectionViewContentSize];
 }
@@ -76,7 +74,7 @@
     CGSize size;
     
     if (_used) {
-        size = CGSizeMake(_collectionViewOriginalSize.width * FIELD_WIDTH, _collectionViewOriginalSize.height);
+        size = CGSizeMake(_collectionViewOriginalSize.width * self.itemSize.width, _collectionViewOriginalSize.height);
     }
     else {
         size = _collectionViewOriginalSize;
