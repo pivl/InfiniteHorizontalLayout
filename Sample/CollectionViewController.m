@@ -10,7 +10,7 @@
 #import "CollectionViewCell.h"
 #import "InfiniteHorizontalLayout.h"
 
-const NSInteger kNumberOfItems = 5;
+const NSInteger kNumberOfItems = 10;
 
 @interface CollectionViewController () <UICollectionViewDataSource>
 
